@@ -1,0 +1,38 @@
+{% load static %}
+{% load custom_templates %}
+{% for champ_dict in pick_list %}
+    {% for champ_key, champ_value in champ_dict.items %}
+        {% define champ_key|cut:" "|cut:"." as champ %}
+        {% if "'" in champ or "Nunu" in champ or "LeBlanc" in champ or "Wukong" in champ %}
+            {% define champ|cut:"'" as champ %}
+            {% define champ|fix_champ as champ %}
+        {% endif %}
+        {% for lane_key, lane_value in champ_value.items %}
+            <div class="champ-row">
+                <div class="champ-row rank">
+                    <span>{{ forloop.parentloop.parentloop.counter }}</span>
+                </div>
+                <div class="champ-row role">
+                    {% if lane_key == "JG" %}
+                        <img src="{% static '/img/positions/icon-position-jungle.png'%}" width="20" height="20">
+                    {% elif lane_key == "TOP" %}
+                        <img src="{% static '/img/positions/icon-position-top.png'%}" width="20" height="20">
+                    {% elif lane_key == "MID" %}
+                        <img src="{% static '/img/positions/icon-position-middle.png'%}" width="20" height="20">
+                    {% elif lane_key == "CARRY" %}
+                        <img src="{% static '/img/positions/icon-position-bottom.png'%}" width="20" height="20">
+                    {% else %}
+                        <img src="{% static '/img/positions/icon-position-utility.png'%}" width="20" height="20">
+                    {% endif %}
+                </div>
+                <div class="champ-row champion">
+                    <img src="{% static '/img/champion/'|add:champ|add:'.png' %}" width="20" height="20">
+                    <span>{{ champ }}</span>
+                </div>
+                <div class="champ-row winrate">{{ lane_value.0|floatformat }}%</div>
+                <div class="champ-row banrate">{{ lane_value.1|floatformat:-1 }}</div>
+                <div class="champ-row pickrate">{{ lane_value.2|floatformat:-1 }}</div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endfor %}

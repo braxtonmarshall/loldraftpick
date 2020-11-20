@@ -1,0 +1,894 @@
+{% extends "base_2.html" %}
+{% load static %}
+{% block page_content %}
+  <!-- ======= Draftapp Section ======= -->
+<section id="intro">
+    <div>
+        <!-- Blue Side -->
+        <div class="holder-blue" id="blue-ban-1">
+            <div class="bar-blue left"></div>
+            <div class="bar-blue top"></div>
+            <div class="bar-blue right"></div>
+            <div class="bar-blue bottom"></div>
+        </div>
+        <div class="holder-blue" id="blue-ban-2"></div>
+        <div class="holder-blue" id="blue-ban-3"></div>
+        <div class="holder-blue" id="blue-ban-4"></div>
+        <div class="holder-blue" id="blue-ban-5"></div>
+        <h2>  Ban a Champion </h2>
+        <!-- Red Side -->
+        <div class="holder-red" id="red-ban-1"></div>
+        <div class="holder-red" id="red-ban-2"></div>
+        <div class="holder-red" id="red-ban-3"></div>
+        <div class="holder-red" id="red-ban-4"></div>
+        <div class="holder-red" id="red-ban-5"></div>
+    </div>
+</section>
+<section id="draftbar">
+    <div class="draft-table-bar">
+        <button class="draft-table-bar-btn" id="filtered-top" onclick="this.blur();">
+            <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+        </button>
+        <button class="draft-table-bar-btn" id="filtered-jg" onclick="this.blur();">
+            <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+        </button>
+        <button class="draft-table-bar-btn" id="filtered-mid" onclick="this.blur();">
+            <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+        </button>
+        <button class="draft-table-bar-btn" id="filtered-bot" onclick="this.blur();">
+            <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+        </button>
+        <button class="draft-table-bar-btn" id="filtered-utility" onclick="this.blur();">
+            <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+        </button>
+        <div class="container-1">
+                <input type="search" id="filtered-search" placeholder="Search..." />
+        </div>
+    </div>
+</section>
+<section id="draft">
+        <div class="draft-blue-selection" id="blue-selection">
+            {% if side == "blue" %}
+            <div class="pick-table-logo">
+                Best Champion Picks - Blue Side
+            </div>
+            <div class="pick-table-query" id="blue-query">
+                    <button class="pick-blue-btn" onclick="this.blur()">Search</button>
+            </div>
+            <div class="pick-table-options">
+                <div class="role">
+                    <input type="image"
+                           src="/static/img/positions/icon-position-top.png"
+                           onclick="this.blur();"
+                           id="pick-top-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-jungle.png"
+                           onclick="this.blur();"
+                           id="pick-jg-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-middle.png"
+                           onclick="this.blur();"
+                           id="pick-mid-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-bottom.png"
+                           onclick="this.blur();"
+                           id="pick-bot-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-utility.png"
+                           onclick="this.blur();"
+                           id="pick-supp-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                </div>
+                <div class="dropdown" id="pick-dropdown-rank-meta">
+                        <span>Diamond 4 +</span>
+                        <div class="dropdown-content" id="pick-dropdown-rank">
+                            <span>Diamond 4 +</span>
+                            <span>Diamond 2 +</span>
+                            <span>Master +</span>
+                            <span>Grandmaster +</span>
+                            <span>Challenger +</span>
+                        </div>
+                </div>
+                <div class="patch" id="pick-dropdown-patch-meta">
+                    <span>10.01 +</span>
+                    <div class="patch-content" id="pick-dropdown-patch">
+                        <span>10.01 +</span>
+                        <span>10.16 +</span>
+                        <span>10.17 +</span>
+                        <span>10.18 +</span>
+                        <span>10.19 +</span>
+                        <span>10.20 +</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pick-table-header">
+                <div class="header-row">
+                    <div class="header-row rank" id="pick-by-rank">Rank</div>
+                    <div class="header-row role" id="pick-by-role">Role</div>
+                    <div class="header-row champ" id="pick-by-champ">Champion</div>
+                    <div class="header-row winrate" id="pick-by-win">Win %</div>
+                    <div class="header-row banrate" id="pick-by-ban">Wins</div>
+                    <div class="header-row pickrate" id="pick-by-pick">Total</div>
+                </div>
+            </div>
+            <div class="pick-table" id="blue-pick-table">
+                {% include "draftapp/picktable.html" %}
+            </div>
+            {% else %}
+            <div class="ban-table-logo">
+                Best Champion Bans - Red Side
+            </div>
+            <div class="ban-table-placeholder"></div>
+            <div class="ban-table-options">
+                <div class="role">
+                    <input type="image"
+                           src="/static/img/positions/icon-position-top.png"
+                           onclick="this.blur();"
+                           id="ban-top-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-jungle.png"
+                           onclick="this.blur();"
+                           id="ban-jg-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-middle.png"
+                           onclick="this.blur();"
+                           id="ban-mid-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-bottom.png"
+                           onclick="this.blur();"
+                           id="ban-bot-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-utility.png"
+                           onclick="this.blur();"
+                           id="ban-supp-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                </div>
+                <div class="dropdown" id="ban-dropdown-rank-meta">
+                    <span>Diamond 4 +</span>
+                    <div class="dropdown-content" id="ban-dropdown-rank">
+                        <span>Diamond 4 +</span>
+                        <span>Diamond 2 +</span>
+                        <span>Master +</span>
+                        <span>Grandmaster +</span>
+                        <span>Challenger +</span>
+                    </div>
+                </div>
+                <div class="patch" id="ban-dropdown-patch-meta">
+                    <span>10.01 +</span>
+                    <div class="patch-content" id="ban-dropdown-patch">
+                        <span>10.01 +</span>
+                        <span>10.16 +</span>
+                        <span>10.17 +</span>
+                        <span>10.18 +</span>
+                        <span>10.19 +</span>
+                        <span>10.20 +</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ban-table-header">
+                <div class="header-row">
+                    <div class="header-row rank" id="ban-by-rank">Rank</div>
+                    <div class="header-row role" id="ban-by-role">Role</div>
+                    <div class="header-row champ" id="ban-by-champ">Champion</div>
+                    <div class="header-row winrate" id="ban-by-win">Win %</div>
+                    <div class="header-row banrate" id="ban-by-ban">Ban %</div>
+                    <div class="header-row pickrate" id="ban-by-pick">Pick %</div>
+                </div>
+            </div>
+            <div class="ban-table" id="red-ban-table">
+                {% include "draftapp/bantable.html" %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="draft-blue" id="draft-blue">
+            <div class="radios" id="blue-radios-1">
+                <label id="blue-side-radio-top-1">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-jg-1">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-mid-1">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-bot-1">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-supp-1">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                        class="btn-blue-side"
+                        id="blue-side-1"
+                        src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                        width="70"
+                        height="70"
+                        value=""
+                        onclick="this.blur();">
+                {% if side == "blue" %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-1"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-1"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+            <div class="radios" id="blue-radios-4">
+                <label id="blue-side-radio-top-4">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-jg-4">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-mid-4">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-bot-4">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-supp-4">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                    class="btn-blue-side"
+                    id="blue-side-4"
+                    src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                    width="70"
+                    height="70"
+                    value=""
+                    onclick="this.blur();">
+                {% if side == "blue" %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-4"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-4"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+            <div class="radios" id="blue-radios-5">
+                <label id="blue-side-radio-top-5">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-jg-5">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-mid-5">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-bot-5">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-supp-5">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                    class="btn-blue-side"
+                    id="blue-side-5"
+                    src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                    width="70"
+                    height="70"
+                    value=""
+                    onclick="this.blur();">
+                {% if side == "blue" %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-5"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-5"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+            <div class="radios" id="blue-radios-8">
+                <label id="blue-side-radio-top-8">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-jg-8">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-mid-8">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-bot-8">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-supp-8">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                    class="btn-blue-side"
+                    id="blue-side-8"
+                    src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                    width="70"
+                    height="70"
+                    value=""
+                    onclick="this.blur();">
+                {% if side == "blue" %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-8"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-8"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+            <div class="radios" id="blue-radios-9">
+                <label id="blue-side-radio-top-9">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-jg-9">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-mid-9">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-bot-9">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="blue-side-radio-supp-9">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                    class="btn-blue-side"
+                    id="blue-side-9"
+                    src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                    width="70"
+                    height="70"
+                    value=""
+                    onclick="this.blur();">
+                {% if side == "blue" %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-9"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="blue-role-button"
+                    id="blue-role-add-9"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+        </div>
+        <div class="draft-table">
+            <table id="draft-table">
+                <tbody class="champ-row">
+                    <tr>
+                        {% for key, value in image_dic.items %}
+                            {% for img in value %}
+                                <td>
+                                    <button class="champ-image">
+                                        <img src="{{img}}" width="60" height="60">
+                                    </button>
+                                </td>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+               </tbody>
+            </table>
+        </div>
+        <div class="draft-red" id="draft-red">
+            <div class="radios" id="red-radios-2">
+                <label id="red-side-radio-top-2">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-jg-2">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-mid-2">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-bot-2">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-supp-2">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                    class="btn-red-side"
+                    id="red-side-2"
+                    src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                    width="70"
+                    height="70"
+                    value=""
+                    onclick="this.blur();">
+                {% if side == "red" %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-2"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-2"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+            <div class="radios" id="red-radios-3">
+                <label id="red-side-radio-top-3">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-jg-3">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-mid-3">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-bot-3">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-supp-3">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                    class="btn-red-side"
+                    id="red-side-3"
+                    src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                    width="70"
+                    height="70"
+                    value=""
+                    onclick="this.blur();">
+                {% if side == "red" %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-3"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-3"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+            <div class="radios" id="red-radios-6">
+                <label id="red-side-radio-top-6">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-jg-6">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-mid-6">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-bot-6">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-supp-6">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                    class="btn-red-side"
+                    id="red-side-6"
+                    src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                    width="70"
+                    height="70"
+                    value=""
+                    onclick="this.blur();">
+                {% if side == "red" %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-6"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-6"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+            <div class="radios" id="red-radios-7">
+                <label id="red-side-radio-top-7">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-jg-7">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-mid-7">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-bot-7">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-supp-7">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                    class="btn-red-side"
+                    id="red-side-7"
+                    src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                    width="70"
+                    height="70"
+                    value=""
+                    onclick="this.blur();">
+                {% if side == "red" %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-7"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-7"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+            <div class="radios" id="red-radios-10">
+                <label id="red-side-radio-top-10">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-utility.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-jg-10">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-bottom.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-mid-10">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-middle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-bot-10">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-jungle.png" width="20" height="20">
+                </label>
+                <label id="red-side-radio-supp-10">
+                    <input type="radio"/>
+                    <img src="/static/img/positions/icon-position-top.png" width="20" height="20">
+                </label>
+            </div>
+            <div>
+                <input  type="image"
+                    class="btn-red-side"
+                    id="red-side-10"
+                    src="{% static '/img/positions/icon-position-autofill-protection.png'%}"
+                    width="70"
+                    height="70"
+                    value=""
+                    onclick="this.blur();">
+                {% if side == "red" %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-10"
+                    src="{% static '/img/positions/icon-add.png'%}"
+                    value=""
+                    onclick="this.blur();">
+                {% else %}
+                <input  type="image"
+                    class="red-role-button"
+                    id="red-role-add-10"
+                    src="{% static '/img/positions/icon-position-none.png'%}"
+                    style="padding: 4px 4px"
+                    value=""
+                    onclick="this.blur();">
+                {% endif %}
+            </div>
+        </div>
+        <div class="draft-red-selection" id="red-selection">
+            {% if side == "blue" %}
+            <div class="ban-table-logo">
+                Best Champion Bans - Blue Side
+            </div>
+            <div class="ban-table-placeholder"></div>
+            <div class="ban-table-options">
+                <div class="role">
+                    <input type="image"
+                           src="/static/img/positions/icon-position-top.png"
+                           onclick="this.blur();"
+                           id="ban-top-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-jungle.png"
+                           onclick="this.blur();"
+                           id="ban-jg-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-middle.png"
+                           onclick="this.blur();"
+                           id="ban-mid-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-bottom.png"
+                           onclick="this.blur();"
+                           id="ban-bot-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-utility.png"
+                           onclick="this.blur();"
+                           id="ban-supp-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                </div>
+                <div class="dropdown" id="ban-dropdown-rank-meta">
+                    <span>Diamond 4 +</span>
+                    <div class="dropdown-content" id="ban-dropdown-rank">
+                        <span>Diamond 4 +</span>
+                        <span>Diamond 2 +</span>
+                        <span>Master +</span>
+                        <span>Grandmaster +</span>
+                        <span>Challenger +</span>
+                    </div>
+                </div>
+                <div class="patch" id="ban-dropdown-patch-meta">
+                    <span>10.01 +</span>
+                    <div class="patch-content" id="ban-dropdown-patch">
+                        <span>10.01 +</span>
+                        <span>10.16 +</span>
+                        <span>10.17 +</span>
+                        <span>10.18 +</span>
+                        <span>10.19 +</span>
+                        <span>10.20 +</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ban-table-header">
+                <div class="header-row">
+                    <div class="header-row rank" id="ban-by-rank">Rank</div>
+                    <div class="header-row role" id="ban-by-role">Role</div>
+                    <div class="header-row champ" id="ban-by-champ">Champion</div>
+                    <div class="header-row winrate" id="ban-by-win">Win %</div>
+                    <div class="header-row banrate" id="ban-by-ban">Ban %</div>
+                    <div class="header-row pickrate" id="ban-by-pick">Pick %</div>
+                </div>
+            </div>
+            <div class="ban-table" id="blue-ban-table">
+                {% include "draftapp/bantable.html" %}
+            </div>
+            {% else %}
+            <div class="pick-table-logo">
+                Best Champion Picks - Red Side
+            </div>
+            <div class="pick-table-query" id="red-query">
+                    <button class="pick-red-btn" onclick="this.blur()">Search</button>
+            </div>
+            <div class="pick-table-options">
+                <div class="role">
+                    <input type="image"
+                           src="/static/img/positions/icon-position-top.png"
+                           onclick="this.blur();"
+                           id="pick-top-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-jungle.png"
+                           onclick="this.blur();"
+                           id="pick-jg-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-middle.png"
+                           onclick="this.blur();"
+                           id="pick-mid-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-bottom.png"
+                           onclick="this.blur();"
+                           id="pick-bot-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                    <input type="image"
+                           src="/static/img/positions/icon-position-utility.png"
+                           onclick="this.blur();"
+                           id="pick-supp-filter"
+                           value=""
+                           width="35"
+                           height="35"
+                    >
+                </div>
+                <div class="dropdown" id="pick-dropdown-rank-meta">
+                        <span>Diamond 4 +</span>
+                        <div class="dropdown-content" id="pick-dropdown-rank">
+                            <span>Diamond 4 +</span>
+                            <span>Diamond 2 +</span>
+                            <span>Master +</span>
+                            <span>Grandmaster +</span>
+                            <span>Challenger +</span>
+                        </div>
+                </div>
+                <div class="patch" id="pick-dropdown-patch-meta">
+                    <span>10.01 +</span>
+                    <div class="patch-content" id="pick-dropdown-patch">
+                        <span>10.01 +</span>
+                        <span>10.16 +</span>
+                        <span>10.17 +</span>
+                        <span>10.18 +</span>
+                        <span>10.19 +</span>
+                        <span>10.20 +</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pick-table-header">
+                <div class="header-row">
+                    <div class="header-row rank" id="pick-by-rank">Rank</div>
+                    <div class="header-row role" id="pick-by-role">Role</div>
+                    <div class="header-row champ" id="pick-by-champ">Champion</div>
+                    <div class="header-row winrate" id="pick-by-win">Win %</div>
+                    <div class="header-row banrate" id="pick-by-ban">Wins</div>
+                    <div class="header-row pickrate" id="pick-by-pick">Total</div>
+                </div>
+            </div>
+            <div class="pick-table" id="red-pick-table">
+                {% include "draftapp/picktable.html" %}
+            </div>
+            {% endif %}
+        </div>
+</section>
+{% endblock %}

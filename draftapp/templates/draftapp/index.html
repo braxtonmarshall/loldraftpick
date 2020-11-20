@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block page_content %}
+  <!-- ======= Intro Section ======= -->
+  <section id="intro">
+    <div class="intro-content">
+      <h2>Select your side</h2>
+      <div>
+        <input
+                type = "button"
+                class="btn-red-side"
+                value="Red Side"
+                onclick="location.href='{% url 'draft' side='red'%}';"
+        >
+        <input
+                type="button"
+                class="btn-blue-side"
+                value="Blue Side"
+                onclick="location.href='{% url 'draft' side='blue'%}';"
+        >
+      </div>
+    </div>
+  </section><!-- End Intro Section -->
+{% endblock %}
