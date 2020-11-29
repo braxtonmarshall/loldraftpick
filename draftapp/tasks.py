@@ -592,5 +592,4 @@ def query_picks(self, side, dictionary):
     totals = matches.filter(team__side=side_int).values_list('team__win_or_lose', 'team__participant__pick_id',
                                                              'team__participant__lane', 'team__participant__role')
     champ_list = process_pick_data(totals)
-
     return champ_list

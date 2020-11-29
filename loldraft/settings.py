@@ -43,7 +43,7 @@ CELERY_TASK_ROUTES = {
 }
 # DJANGO CONFIGURATION
 ALLOWED_HOSTS = [
-    'loldraftpick.com', '134.209.116.151', 'localhost'
+    'www.loldraftpick.com', 'loldraftpick.com', '134.209.116.151', 'localhost'
 ]
 #ADMINS = (
 #    ('Braxton Marshall', os.getenv("ADMIN_EMAIL"))
@@ -94,7 +94,7 @@ CSRF_COOKIE_SECURE = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'CONN_MAX_AGE': None,
+        'CONN_MAX_AGE': 0,
         'OPTIONS': {
             'read_default_file': '/home/mars/mysql/my.cnf',
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"

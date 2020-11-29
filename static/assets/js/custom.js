@@ -1433,8 +1433,8 @@ $.ajaxWrapper = function(method, table_type)
             success: function(result)
             {
                 $table.html(result);
+		$.clearDictionary($pick_table_dict);
                 $.loadTableDict($pick_table_dict, PICK_STR);
-                console.log($pick_table_dict);
                 $.clearTable(PICK_STR);
                 $.makeTable($pick_table_dict, PICK_STR);
                 $rank = $patch = $table = null;

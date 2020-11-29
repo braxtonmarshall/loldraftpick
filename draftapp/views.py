@@ -69,5 +69,4 @@ def load_picktable(request, side, image_dic):
     data_list = result.get()
     data_list = data_list[0:100]
     context_dict = {'image_dic': image_dic, 'side': side, 'pick_list': data_list}
-
     return render(request, "draftapp/picktable.html", context_dict)
